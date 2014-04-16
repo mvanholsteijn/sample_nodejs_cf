@@ -7,4 +7,4 @@ applications:
   description: sample node.js application
   path: .
   env:
-    NAME: release-v1
+   RELEASE: v4

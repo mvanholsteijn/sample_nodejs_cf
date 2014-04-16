@@ -48,7 +48,7 @@ function MonitorController($scope, $interval, $http) {
 			console.log("error calling " + config.url + ", " + $scope.last_status);
 			if($scope.error_count % 250 == 0) {
 				$scope.stopMonitor();
-				console.log("more than 10 more errors, stopped monitoring.");
+				console.log("more than 250 errors, stopped monitoring.");
 			}
 		});
    }

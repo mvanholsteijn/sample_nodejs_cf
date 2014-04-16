@@ -13,7 +13,8 @@ var port = Number(process.env.VCAP_APP_PORT || 5000);
 app.get('/status', function(req, res) {
   var result = {};
   result["key"] = os.hostname() + ":" + port;
-  result["message"] = "Hello World from " + process.env.NAME;
+  result["release"] = process.env.RELEASE;
+  result["message"] = "Hello World from " + process.env.RELEASE;
 
   res.set('Content-Type', 'application/json');
   res.send(JSON.stringify(result));
