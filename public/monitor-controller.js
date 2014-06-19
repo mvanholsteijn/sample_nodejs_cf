@@ -2,7 +2,7 @@ function MonitorController($scope, $interval, $http) {
     var monitor;
     $scope.error_count = 0;
     $scope.responses = [];
-    $scope.count = {};
+    $scope.stats = {};
     $scope.last_status = "";
 
     $scope.startMonitor =  function() {
@@ -27,15 +27,20 @@ function MonitorController($scope, $interval, $http) {
     });
 
     $scope.callService = function() {
+            var startTime = new Date().getTime();
 	    $http.get('http://' + document.location.host + '/status').
 		success(function(response) {
+		    var responseTime = new Date().getTime() - startTime;
 		    var key = response.key;
 		    $scope.msg = key;
-		    if($scope.count.hasOwnProperty(key)) {
-			    $scope.count[key] += 1;
+		    if($scope.stats.hasOwnProperty(key)) {
+			    $scope.stats[key].count += 1;
+			    $scope.stats[key].total += responseTime;
+			    $scope.stats[key].last = responseTime;
+			    $scope.stats[key].avg = $scope.state[key].total / $scope.state[key].count;
 		    } else {
-			    $scope.count[key] = 1;
-			    $scope.responses.push(response);
+			    $scope.stats[key] = { count : 1, last : responseTime, total : responseTime, avg : responseTime };
+			    $scope.responses.push(response) ;
 		    }
 		}).
 		error(function(data, status, headers, config) {

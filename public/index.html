@@ -15,12 +15,16 @@
 			    <th>release</th>
 			    <th>message</th>
 			    <th># of calls</th>
+			    <th>avg response time</th>
+			    <th>last response time</th>
 			</tr>
 			<tr ng-repeat="response in responses">
 			    <td>{{response.key}}</td>
 			    <td>{{response.release}}</td>
 			    <td>{{response.message}}</td>
-			    <td>{{count[response.key]}}</td>
+			    <td>{{stats[response.key].count}}</td>
+			    <td>{{stats[response.key].avg}}</td>
+			    <td>{{stats[response.key].last}}</td>
 			</tr>
                     </table>
 		    <p>
