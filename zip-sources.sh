@@ -1,1 +1,1 @@
-zip -r sample_nodejs_cf.zip web.js package.json public Dockerfile README.md
+zip -r sample-nodejs-cf-srcs.zip web.js package.json public Dockerfile README.md
