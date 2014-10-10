@@ -65,7 +65,7 @@ function uploadBinaryArtifact() {
 	local APPNAME="$1"
 	local FILE="$2"
 	local VERSION="$3"
-	determineS3BucketAndKey "$FILE" "VERSION"
+	determineS3BucketAndKey "$FILE" "$VERSION"
 	local EXISTS=$(aws s3 ls s3://$S3BUCKET/$S3KEY)
 	if [ -z "$EXISTS" ] ; then
 		echo INFO: Uploading $FILE for "$APPNAME", version $VERSION.
