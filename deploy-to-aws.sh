@@ -59,7 +59,7 @@ function determineS3BucketAndKey() {
 	local FILE="$1"
 	local VERSION="$2"
 	S3BUCKET=$(aws elasticbeanstalk create-storage-location | jq -r '.S3Bucket')
-	S3KEY=$VERSION-$(basename $FILE)
+	S3KEY="$VERSION-$(basename $FILE)"
 }
 function uploadBinaryArtifact() {
 	local APPNAME="$1"
