@@ -92,7 +92,7 @@ function createApplicationVersionIfNotExists() {
 			--source-bundle S3Bucket=$S3BUCKET,S3Key=$S3KEY \
 			--auto-create-application)
 	else
-		echo Version INFO: $VERSION of "$APPNAME" already exists.
+		echo INFO: Version $VERSION of "$APPNAME" already exists.
 	fi
 }
 
@@ -102,7 +102,7 @@ function busyWaitEnvironmentStatus() {
 	local STATUS="${3:-Ready}"
 	getEnvironmentStatus "$APPNAME" "$ENV"
 	while [ "$ENV_STATUS" != "$STATUS" ] ; do 
-		echo in status $ENV_STATUS, waiting to get to $STATUS..
+		echo INFO: "$ENV" in status $ENV_STATUS, waiting to get to $STATUS..
 		sleep 5
 		getEnvironmentStatus "$APPNAME" "$ENV"
 	done
@@ -118,13 +118,13 @@ function updateEnvironment() {
 
 	if [ "$ENV_VERSION" != "$APPNAME-$VERSION" ] ; then
 		busyWaitEnvironmentStatus "$APPNAME" "$ENV"
-		echo "Updating environment $ENV with version $VERSION of $APPNAME"
+		echo "INFO: Updating environment $ENV with version $VERSION of $APPNAME"
 		ENV_DESCRIPTOR=$(aws elasticbeanstalk update-environment \
 			--environment-name "$ENV" \
 			--version-label "$APPNAME-$VERSION")
 		busyWaitEnvironmentStatus "$APPNAME" "$ENV"
 		echo INFO: Version $VERSION of "$APPNAME" deployed in environment
-		echo INFO:  current status is $ENV_STATUS, goto http://$(echo $ENV_DESCRIPTOR | jq -r .CNAME)
+		echo INFO: current status is $ENV_STATUS, goto http://$(echo $ENV_DESCRIPTOR | jq -r .CNAME)
 	else
 		echo INFO: Version $VERSION of "$APPNAME" already deployed in environment
 		echo INFO:  current status is $ENV_STATUS, goto http://$(echo $ENV_DESCRIPTOR | jq -r .CNAME)
