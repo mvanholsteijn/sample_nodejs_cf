@@ -85,7 +85,7 @@ function createApplicationVersionIfNotExists() {
 		jq -r '.ApplicationVersions | .[]?')
 
 	if [ -z "$APP_VERSION" ] ; then
-		echo Creating version $VERSION of application "$APPNAME"
+		echo INFO: Creating version $VERSION of application "$APPNAME"
 		APP_VERSION=$(aws elasticbeanstalk create-application-version \
 			--application-name "$APPNAME" \
 			--version-label "$APPNAME-$VERSION" \
