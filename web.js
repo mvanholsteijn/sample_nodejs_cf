@@ -20,6 +20,11 @@ app.get('/status', function(req, res) {
   res.send(JSON.stringify(result));
 });
 
+app.get('/environment', function(req, res) {
+  res.set('Content-Type', 'application/json');
+  res.send(JSON.stringify(process.env));
+});
+
 app.listen(port, function() {
   console.log("Listening on " + port);
 });
