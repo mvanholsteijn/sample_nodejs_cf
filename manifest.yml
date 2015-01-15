@@ -2,9 +2,11 @@
 applications:
 - name: sample-nodejs-cf
   command: node web.js
-  memory: 128M
+  memory: 32m
+  disk: 128m
   instances: 2
   description: sample node.js application
   path: .
-  env:
-   RELEASE: v4
+  stackato:
+    env:
+      RELEASE: v5
