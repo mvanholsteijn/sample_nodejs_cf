@@ -5,12 +5,19 @@ var logfmt = require("logfmt");
 var os = require("os");
 var app = express();
 
+if ( process.env.CONTEXT_ROOT ) {
+	var contextroot =   '/' + process.env.CONTEXT_ROOT
+} else {
+	var contextroot = ''
+}
+
+
 app.use(logfmt.requestLogger());
-app.use('/', express.static(__dirname + '/public'));
+app.use(contextroot + '/', express.static(__dirname + '/public'));
 
 var port = Number(process.env.VCAP_APP_PORT || 5000);
 
-app.get('/status', function(req, res) {
+app.get(contextroot + '/status', function(req, res) {
   var result = {};
   result["key"] = os.hostname() + ":" + port;
   result["release"] = process.env.RELEASE;
@@ -20,10 +27,16 @@ app.get('/status', function(req, res) {
   res.send(JSON.stringify(result));
 });
 
-app.get('/environment', function(req, res) {
+app.get(contextroot + '/environment', function(req, res) {
   res.set('Content-Type', 'application/json');
   res.send(JSON.stringify(process.env));
 });
+
+app.get(contextroot + '/headers', function(req, res) {
+  res.set('Content-Type', 'application/json');
+  res.send(JSON.stringify(req.headers));
+});
+
 
 app.listen(port, function() {
   console.log("Listening on " + port);
