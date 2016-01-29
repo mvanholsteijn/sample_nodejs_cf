@@ -145,7 +145,7 @@ function checkEnvironment() {
 APPNAME=$1
 FILE=$2
 ENV=${3:-development}
-SOLUTION_STACK=${4:-64bit Amazon Linux 2014.09 v1.0.8 running Docker 1.2.0}
+SOLUTION_STACK=${4:-64bit Amazon Linux 2015.09 v2.0.6 running Docker 1.7.1}
 if [ $# -lt 2 ] ; then
 	usage
 fi
@@ -153,7 +153,7 @@ fi
 if [ ! -f $FILE ] ; then
 	usage "$2 is not a readable file"
 fi
-VERSION=$(stat -f %m "$FILE")
+VERSION=$(stat --format=%Y "$FILE")
 
 
 checkEnvironment "$APPNAME" "$ENV"
